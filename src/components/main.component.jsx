@@ -5,6 +5,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "./home.component";
 import Menu from "../components/menu.component";
 import Contact from "./contact.component";
+import About from "./about.component";
 import COMMENTS from "../data-values/comments";
 import LEADERS from "../data-values/leaders";
 import PROMOTIONS from "../data-values/promotion";
@@ -38,10 +39,24 @@ class Main extends Component {
         />
       );
     };
+    const DishWithId = ({ match }) => {
+      return (
+        <DishDetail
+          dish={
+            this.state.dishes.filter(
+              (dish) => dish.id === parseInt(match.params.dishId, 10)
+            )[0]
+          }
+          comments={this.state.comments.filter(
+            (comment) => comment.dishId === parseInt(match.params.dishId, 10)
+          )}
+        />
+      );
+    };
     return (
       <>
         <Header />
-        <BrowserRouter>
+        
           <Switch>
             <Route path="/home" component={HomePage} />
             <Route
@@ -49,10 +64,16 @@ class Main extends Component {
               path="/menu"
               component={() => <Menu dishes={this.state.dishes} />}
             ></Route>
+            <Route path="/menu/:dishId" component={DishWithId} />
             <Route exact path="/contactus" component={Contact}></Route>
+            <Route
+              exact
+              path="/aboutus"
+              component={() => <About leaders={this.state.leaders} />}
+            />
             <Redirect to="/home" />
           </Switch>
-        </BrowserRouter>
+        
         <Footer />
       </>
     );

@@ -37,7 +37,7 @@ class Header extends Component {
               />
             </NavbarBrand>
             <Collapse isOpen={this.state.isNavOpen} navbar>
-              <BrowserRouter>
+           
                 <Nav navbar>
                   <NavItem>
                     <NavLink className="nav-link" to="/home">
@@ -61,7 +61,7 @@ class Header extends Component {
                     </NavLink>
                   </NavItem>
                 </Nav>
-              </BrowserRouter>
+              
             </Collapse>
           </div>
         </Navbar>
