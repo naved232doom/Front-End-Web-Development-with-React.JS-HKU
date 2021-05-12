@@ -1,10 +1,7 @@
-import React, { Component } from "react";
-import { CardImg, CardText, ListGroupItemHeading, NavItem } from "reactstrap";
+import React  from "react";
+import { CardImg, CardText } from "reactstrap";
 import {
   Card,
-  CardBody,
-  CardTitle,
-  CardImgOverlay,
   Breadcrumb,
   BreadcrumbItem,
 } from "reactstrap";
