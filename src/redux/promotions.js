@@ -1,4 +1,4 @@
-import PROMOTIONS from "../data-values/dish.data";
+import PROMOTIONS from "../data-values/promotion";
 
 export const Promotions = (state = PROMOTIONS, action) => {
   switch (action.type) {

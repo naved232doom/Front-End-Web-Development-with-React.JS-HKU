@@ -1,4 +1,4 @@
-import LEADERS from "../data-values/dish.data";
+import LEADERS from "../data-values/leaders";
 
 export const Leaders = (state = LEADERS, action) => {
   switch (action.type) {
