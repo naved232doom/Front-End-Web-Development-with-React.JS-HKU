@@ -16,13 +16,14 @@ import {
 } from "reactstrap";
 import { LocalForm, Control, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
+import { Loading } from "./LoadingComponent";
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
 const minLength = (len) => (val) => val && val.length >= len;
 // const isNumber = (val) => !isNaN(Number(val));
 // const validEmail = (val) =>
 //   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
-function RenderDish({ dish, comments }) {
+function RenderDish({ dish, comments, addComment, dishId }) {
   if (dish != null) {
     return (
       <>
@@ -56,7 +57,7 @@ function RenderDish({ dish, comments }) {
                 );
               })}
               <div className="mt-5">
-                <CommentForm />
+                <CommentForm addComment={addComment} dishId={dishId} />
               </div>
             </CardBody>
           </Card>
@@ -97,9 +98,7 @@ class CommentForm extends Component {
             <div className="col-12 col-md-9">
               <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                 <Row className="form-group">
-                  <Label htmlfor="firstname" >
-                    Name
-                  </Label>
+                  <Label htmlfor="firstname">Name</Label>
                   <Col>
                     <Control.text
                       model=".firstname"
@@ -126,9 +125,7 @@ class CommentForm extends Component {
                   </Col>
                 </Row>
                 <Row className="form-group">
-                  <Label htmlfor="message" >
-                    Rating
-                  </Label>
+                  <Label htmlfor="message">Rating</Label>
                   <Col className="offset-md-1">
                     <Control.select
                       model=".select"
@@ -144,10 +141,8 @@ class CommentForm extends Component {
                   </Col>
                 </Row>
                 <Row className="form-group ">
-                  <Label htmlfor="message">
-                    Comments
-                  </Label>
-                  <Col >
+                  <Label htmlfor="message">Comments</Label>
+                  <Col>
                     <Control.textarea
                       model=".message"
                       className="form-control"
@@ -160,7 +155,7 @@ class CommentForm extends Component {
                 <Row className="form-group">
                   <Col className="col-md-10 offset-md-2">
                     <Button type="submit" color="primary">
-                     Submit
+                      Submit
                     </Button>
                   </Col>
                 </Row>
@@ -173,6 +168,25 @@ class CommentForm extends Component {
   }
 }
 const DishDetail = (props) => {
+  if (props.isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  }
+  else if(props.errMess){
+    return (
+      <div className="container">
+        <div className="row">
+          <h3>{props.errMess}</h3>
+        </div>
+      </div>
+    );
+  }
+  else if(props.dish!=null)
   return (
     <div className="container">
       <div className="row">
@@ -191,7 +205,12 @@ const DishDetail = (props) => {
         </div>
       </div>
 
-      <RenderDish dish={props.dish} comments={props.comments} />
+      <RenderDish
+        dish={props.dish}
+        comments={props.comments}
+        addComment={props.addComment}
+        dishId={props.dish.id}
+      />
     </div>
   );
 };
